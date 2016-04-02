@@ -37,32 +37,22 @@ router.post('/login', function(req, res, next){
 			console.log(err)
 		}
 		else {
-			//console.log("DOCS = " + JSON.stringify(docs));
+			//Chưa có task nên là chưa lấy task về
 			if (req.body.remember && docs) {
 				for(var i = 0; i < docs.length; i++){
 					sess.name = docs[i].name;
 					sess.logged = 1;
 					sess.username = docs[i].username;
 					sess.password = docs[i].password;
-					//console.log("User name= "+ docs.username);
 				}
-				//console.log("Docs remember= "+docs);
 			}
 			if (docs) {
 				var user = {};
 				for(var i = 0; i < docs.length; i++){
 					sess.name = docs[i].name;
-					sess.logged = 1;
-					sess.username = docs[i].username;
-					sess.password = docs[i].password;
-					user.name = docs.name;
-					//console.log("User name= "+ docs.name);
+					user.name = docs[i].name;
 					user.logged = 1;
 				}
-				
-				
-				//request for task here
-				//console.log("Docs only= "+docs);
 			};
 			res.redirect("/");	
 		}
@@ -70,6 +60,10 @@ router.post('/login', function(req, res, next){
 	});
 });
 
+router.get('/logout', function(req, res, next){
+	req.session.destroy();
+	res.redirect('/');
+});
 router.get('/register', function(req, res, next){
 	users.insert({username:"quangcuong0808", password:"123", name:"Cương Trần"});
 });

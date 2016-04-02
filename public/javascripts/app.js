@@ -24,3 +24,7 @@ $(function() {
 //$("#avatar").attr("src", user.avatar );
 //console.log("Userinfor: " + document.getElementById('userinfo').value);
 //$("#username").html( user.name );
+function logout() {
+	window.location = "/logout";
+}
+
