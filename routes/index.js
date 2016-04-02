@@ -47,11 +47,9 @@ router.post('/login', function(req, res, next){
 				}
 			}
 			if (docs) {
-				var user = {};
 				for(var i = 0; i < docs.length; i++){
 					sess.name = docs[i].name;
-					user.name = docs[i].name;
-					user.logged = 1;
+					sess.logged = 1;
 				}
 			};
 			res.redirect("/");	
