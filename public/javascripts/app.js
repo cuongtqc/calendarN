@@ -17,3 +17,10 @@ $(function() {
 	});
 
 });
+// bên trên là jquery cho phần login cho đẹp
+
+// user data( template )
+//var user = jQuery.parseJSON( ""+document.getElementById('userinfo').value );
+//$("#avatar").attr("src", user.avatar );
+//console.log("Userinfor: " + document.getElementById('userinfo').value);
+//$("#username").html( user.name );
