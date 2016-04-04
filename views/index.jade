@@ -11,8 +11,8 @@ html
 		script(src='javascripts/bootstrap.min.js')
 	body
 		// Login container. Nếu đang có sẵn tài khoản thì cứ login, không có thì tự động tạo tài khoản cho người dùng
-		p.hidden#userinfo= JSON.stringify(user)
-		-if(!user.logged==1)
+		p.hidden#userinfo= JSON.stringify(sess.user)
+		-if(!sess.user.logged==1)
 			.container
 				.row
 					.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3.col-sm-8.col-sm-offset-2
@@ -44,21 +44,44 @@ html
 															// Href ....
 															a.forgot-password(href='#', tabindex='5') Forgot Password?
 			//After login
-		-if(user.logged==1)
+		-if(sess.user.logged==1)
 			.container-fluid
 				.row
 					.col-lg-3.flex-container-col
 						#user
 							img#avatar.img
-							p#username=user.name
+							p#username=sess.user.name
 						#btn-add.btn.btn-lg  Add 
 						#btn-edit.btn.btn-lg  Edit
 						#btn-delete.btn.btn-lg  Delete 
 						#btn-sort.btn.btn-lg  Sort 
 						#btn-select.btn.btn-lg  Select day 
 						#btn-out.btn.btn-lg(onclick="logout()")  Log out
-					.col-lg-9.flex-container-row
-						p.flex-item.day-text  Today 
-						p.flex-item.day-text  Day 1 
-						p.flex-item.day-text  Day 2 
-			script(src='javascripts/app.js')
+					.col-lg-9
+						// hiện list task
+						-if(sess.user.act == 'view')
+							#task-view
+								.flex-container-row
+									p.flex-item.day-text  Today 
+									p.flex-item.day-text  Day 1 
+									p.flex-item.day-text  Day 2 
+									p.flex-item.day-text  Day 3 
+								ul#task-list
+						-if(sess.user.act == 'edit' || sess.user.act == 'add')
+							#task-edit
+								// chỉnh sửa / thêm task
+								// nếu người dùng ấn add thì cho thằng này value 'Add task', tương tự cho chỉnh sửa
+								h2#task-edit-tittle.jumbotron
+									| Add task 
+									form#task-edit-form(action='#', role='form', style='display: block;')
+										.form-group
+											input#task-name.form-control(type='text', name='task-name', tabindex='1', placeholder="Task's name")
+										.form-group
+											input#task-deadline.form-control(type='date', name='task-deadline', tabindex='2', placeholder="Task's deadline")
+										.form-group
+											input#task-submit.form-control.btn.pull-right(type='submit', name='task-submit', tabindex='3', value='Submit')
+						
+		script(src='javascripts/picker.js')
+		script(src='javascripts/picker.date.js')
+		script(src='javascripts/app.js')
+

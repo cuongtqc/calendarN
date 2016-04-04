@@ -61,6 +61,24 @@ body {
 	flex-grow: 1;
 }
 
+#task-list {
+	list-style-type: none;
+	padding: 0px;
+}
+
+.task-item {
+	margin-top: 1em;
+}
+
+.progress {
+	height: 3em;
+	border-radius: 0px;
+}
+
+#task-submit {
+	width: 10em;
+}
+
 @font-face {
   font-family: 'Aleo';
   font-style: normal;
