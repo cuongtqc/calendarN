@@ -7,7 +7,7 @@ var db = require('monk')('mongodb://quangcuong0808:kiwihoabattu95@ds011790.mlab.
 var router = express.Router();
 
 var users = db.get('users');
-var tasks = db.get('tasks');
+var tasks = db.get('task');
 
 var app = express();
 app.use(session({secret: 'duanaohachduocpassnayAhihi'}));
@@ -72,11 +72,17 @@ router.get('/register', function(req, res, next){
 	});
 });
 
-router.get('/act:add', function(req, res, next){
-	var add = req.params.add;
-	sess.user = sess.user||{};
-	sess.user.act = add;
-	res.redirect('/');
+router.get('/:act', function(req, res, next){
+	//sess.user = sess.user||{};
+	sess.user.act = req.params.act;
+	sess.user.name = sess.user.name;
+	res.render('index',{sess: sess});
 });
 
+router.post('/them', function(req, res, next){
+	tasks.insert({
+		task: {content: req.body.task_name, deadline: req.body.task_deadline}
+	});
+	res.redirect('/');
+});
 module.exports = router;

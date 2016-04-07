@@ -81,5 +81,11 @@ $("#task-deadline").pickadate({
 function logout(){
 	window.location = 'http://localhost:3000/logout';
 }
-
+//Trung added new function
+function add(){
+	window.location = 'http://localhost:3000/add';
+}
+function edit(){
+	window.location = 'http://localhost:3000/edit';
+}
 //module.exports = {foo: test};

@@ -51,8 +51,8 @@ html
 						#user
 							img#avatar.img
 							p#username=sess.user.name
-						#btn-add.btn.btn-lg  Add 
-						#btn-edit.btn.btn-lg  Edit
+						#btn-add.btn.btn-lg(onclick="add()")  Add 
+						#btn-edit.btn.btn-lg(onclick="edit()")  Edit
 						#btn-delete.btn.btn-lg  Delete 
 						#btn-sort.btn.btn-lg  Sort 
 						#btn-select.btn.btn-lg  Select day 
@@ -73,11 +73,11 @@ html
 								// nếu người dùng ấn add thì cho thằng này value 'Add task', tương tự cho chỉnh sửa
 								h2#task-edit-tittle.jumbotron
 									| Add task 
-									form#task-edit-form(action='#', role='form', style='display: block;')
+									form#task-edit-form(method='post', action='/them', role='form', style='display: block;')
 										.form-group
-											input#task-name.form-control(type='text', name='task-name', tabindex='1', placeholder="Task's name")
+											input#task-name.form-control(type='text', name='task_name', tabindex='1', placeholder="Task's name")
 										.form-group
-											input#task-deadline.form-control(type='date', name='task-deadline', tabindex='2', placeholder="Task's deadline")
+											input#task-deadline.form-control(type='date', name='task_deadline', tabindex='2', placeholder="Task's deadline")
 										.form-group
 											input#task-submit.form-control.btn.pull-right(type='submit', name='task-submit', tabindex='3', value='Submit')
 						
