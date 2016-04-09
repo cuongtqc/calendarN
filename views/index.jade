@@ -9,6 +9,7 @@ html
 		meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
 		script(src='javascripts/jquery.min.js')
 		script(src='javascripts/bootstrap.min.js')
+		script(src='javascripts/main.js')
 	body
 		// Login container. Nếu đang có sẵn tài khoản thì cứ login, không có thì tự động tạo tài khoản cho người dùng
 		p.hidden#userinfo= JSON.stringify(sess.user)
@@ -83,5 +84,5 @@ html
 						
 		script(src='javascripts/picker.js')
 		script(src='javascripts/picker.date.js')
-		script(src='javascripts/app.js')
+		
 
