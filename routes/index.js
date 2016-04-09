@@ -14,11 +14,11 @@ app.use(session({secret: 'duanaohachduocpassnayAhihi'}));
 
 
 /* GET home page. */
-var sess = {}; //session variable
-sess.user = sess.user||{};
+//var sess = {}; //session variable
+//sess.user = sess.user||{};
 
 router.get('/', function(req, res, next) {
-	sess = req.session;
+	sess = req.session||{};
 	sess.user = sess.user||{};
 	if (JSON.stringify(sess.user)!='{}' && sess.user!=null) {
 		sess.user.logged = 1;
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next){
-	sess = req.session;
+	sess = req.session||{};
 	sess.user = sess.user||{};
 	var promise = users.find( { username:req.body.username, password:req.body.password}, function(err, docs){
 		if (err) { 
@@ -57,6 +57,7 @@ router.post('/login', function(req, res, next){
 
 router.get('/logout', function(req, res, next){
 	req.session.destroy();
+	//db.close();
 	res.redirect('/');
 });
 
@@ -65,7 +66,7 @@ router.get('/register', function(req, res, next){
 	//users.insert({username:"quangcuong0808", password:"123", name:"Cương Trần"});
 	//edit database
 	users.findAndModify({username : 'quangcuong0808'}, 
-		{ $set: {task : [{content:"Going to school", deadline:'12-1-2012'}]}} ,
+		{ $set: {task: [{content: "Task 1",deadline: "2016-04-09"}]}},
 		{upsert : true},
 		function (err, result) {
     	console.log(err);
@@ -73,15 +74,22 @@ router.get('/register', function(req, res, next){
 });
 
 router.get('/:act', function(req, res, next){
-	//sess.user = sess.user||{};
+	sess = req.session||{};
 	sess.user.act = req.params.act;
 	sess.user.name = sess.user.name;
 	res.render('index',{sess: sess});
 });
 
 router.post('/them', function(req, res, next){
-	tasks.insert({
-		task: {content: req.body.task_name, deadline: req.body.task_deadline}
+	sess = req.session||{};
+	var a = sess.user.task||[];
+	sess.user.task.push({content: req.body.task_name, deadline: req.body.task_deadline});
+	//console.log(sess.user.task);
+	users.findAndModify({username : sess.user.username}, 
+		{ $set: {task : sess.user.task}} ,
+		{upsert : true},
+		function (err, result) {
+    	console.log(err);
 	});
 	res.redirect('/');
 });

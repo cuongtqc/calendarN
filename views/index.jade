@@ -6,10 +6,11 @@ html
 		link(rel='stylesheet', href='stylesheets/main.css')
 		link(rel='stylesheet', href='stylesheets/login.css')
 		link(rel='stylesheet', href='stylesheets/calendar.css')
+		link(rel='stylesheet', href='stylesheets/default.css')		
+		link(rel='stylesheet', href='stylesheets/default.date.css')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=no')
 		script(src='javascripts/jquery.min.js')
 		script(src='javascripts/bootstrap.min.js')
-		script(src='javascripts/main.js')
 	body
 		// Login container. Nếu đang có sẵn tài khoản thì cứ login, không có thì tự động tạo tài khoản cho người dùng
 		p.hidden#userinfo= JSON.stringify(sess.user)
@@ -67,7 +68,7 @@ html
 									p.flex-item.day-text  Day 1 
 									p.flex-item.day-text  Day 2 
 									p.flex-item.day-text  Day 3 
-								ul#task-list
+								ul#taskList
 						-if(sess.user.act == 'edit' || sess.user.act == 'add')
 							#task-edit
 								// chỉnh sửa / thêm task
@@ -84,5 +85,6 @@ html
 						
 		script(src='javascripts/picker.js')
 		script(src='javascripts/picker.date.js')
+		script(src='javascripts/main.js')
 		
 

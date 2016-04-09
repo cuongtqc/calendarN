@@ -1,8 +1,4 @@
 // function hệ thống
- //var jsdom = require('jsdom').jsdom;
- //var document = jsdom('<html></html>', {});
- //var window = document.defaultView;
- //var $ = require('jquery')(window);
 $(document).ready(function(){
 	
 	$(function() {
@@ -33,37 +29,40 @@ $(document).ready(function(){
 		var date2_ms = date2.getTime();
 		var difference_ms = date2_ms - date1_ms;
 		return Math.round( difference_ms / one_day ); 
-	}
-
+	};
+	//alert('TEST' + $("#userinfo").text());
 	// user data( template )
 	// user là JSON object
-	//{ "name": "John", "avatar": "img/avatar.jpg"}
-	var user = jQuery.parseJSON( $("#userinfo").text() );
-	$("#avatar").attr("src", sess.user.avatar );
-	$("#username").html( user.name );
+	// userinfo sẽ được thêm ngay trong jade không cần bind từ đây vì chỉ cần lấy sess.user là lấy được thông tin cá nhân rồi
+	
+	// khi nào get được json thì chạy đống dưới đây
 
 	// task data( template )
 	// task là JSON array chứa các task và deadline
-	var task = user.task;
-
-	// khi nào get được json thì chạy đống dưới đây
+	var task = jQuery.parseJSON( $("#userinfo").text() ).task;
+	
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
-	$("#task-list").empty();
+	$("#taskList").empty();
 	var toDay = new Date(); toDay.setHours( 0 , 0 , 0 , 0 );
-	$.each( task, function( i, item ) {
-		var from = item.deadline.split( '-' );
-		var day = new Date( from[2], from[1] - 1, from[0] );
+	alert(JSON.stringify(task));
+	for(i = 0; i<task.length; i++) {
+		var from = task[i].deadline.split( '-' );
+		var day = null;
+		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );
+		if (from[2].length==2) day = new Date( from[0], from[1] - 1, from[2] );
 		var x = differ( toDay , day );
-		if ( x > 3 ) x = 3; x *= 25;
-		var htmlData = '<li class="task-item">' + 
-				'<div class="progress">' + 
-					'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + x + '%">' +
-						item.content + 
-					'</div>' + 
-				'</div>' 
-			'</li>';
-		$("#task-list").append( htmlData );
-	})
+		alert(JSON.stringify(toDay)+ ' X = '+ JSON.stringify(day) +'==' +x);
+		if ( x > 3 ) x = 3; temp = (x) * 25;
+		var htmlData = '<div class="task-item">' + 
+					'<div class="progress">' + 
+						'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%">' + 
+							task[i].content +
+						'</div>' + 
+					'</div>' +
+			'</div>';
+		alert('TEST' + htmlData);
+		$("#taskList").append( htmlData );
+	};
 
 	// đến đây là hết cái đống get json rồi
 
@@ -73,9 +72,11 @@ $(document).ready(function(){
 		clear: '',
 		close: 'Cancel',
 		min: 1
-	})
+	});
 
 	//Cuong them function
+	
+});
 	function logout(){
 		window.location = 'http://localhost:3000/logout';
 	}
@@ -86,4 +87,3 @@ $(document).ready(function(){
 	function edit(){
 		window.location = 'http://localhost:3000/edit';
 	}
-});
