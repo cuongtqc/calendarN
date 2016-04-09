@@ -44,14 +44,14 @@ $(document).ready(function(){
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
 	$("#taskList").empty();
 	var toDay = new Date(); toDay.setHours( 0 , 0 , 0 , 0 );
-	alert(JSON.stringify(task));
+
 	for(i = 0; i<task.length; i++) {
 		var from = task[i].deadline.split( '-' );
 		var day = null;
 		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );
 		if (from[2].length==2) day = new Date( from[0], from[1] - 1, from[2] );
 		var x = differ( toDay , day );
-		alert(JSON.stringify(toDay)+ ' X = '+ JSON.stringify(day) +'==' +x);
+
 		if ( x > 3 ) x = 3; temp = (x) * 25;
 		var htmlData = '<div class="task-item">' + 
 					'<div class="progress">' + 
@@ -60,7 +60,6 @@ $(document).ready(function(){
 						'</div>' + 
 					'</div>' +
 			'</div>';
-		alert('TEST' + htmlData);
 		$("#taskList").append( htmlData );
 	};
 
@@ -77,13 +76,30 @@ $(document).ready(function(){
 	//Cuong them function
 	
 });
+		
+	function sortI(){
+		
+			var items = $("#taskList div").get();
+			items.sort( function( a , b ) {
+				var keyA = $(a).children(".progress").children().attr( "value" );
+				var keyB = $(b).children(".progress").children().attr( "value" );
+				if ( keyA < keyB ) return -1;
+				if ( keyA > keyB ) return 1;
+				return 0;
+			});
+			var ul = $('#taskList');
+			$.each(items, function(i, li){
+				ul.append(li);
+			});
+		
+	}
 	function logout(){
-		window.location = 'http://localhost:3000/logout';
+		window.location.href = '/logout';
 	}
 	//Trung added new function
 	function add(){
-		window.location = 'http://localhost:3000/add';
+		window.location.href = '/add';
 	}
 	function edit(){
-		window.location = 'http://localhost:3000/edit';
+		window.location.href = '/edit';
 	}
