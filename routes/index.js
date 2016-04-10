@@ -62,9 +62,7 @@ router.get('/logout', function(req, res, next){
 });
 
 router.get('/register', function(req, res, next){
-	//insert user
-	//users.insert({username:"quangcuong0808", password:"123", name:"Cương Trần"});
-	//edit database
+
 	users.findAndModify({username : 'quangcuong0808'}, 
 		{ $set: {task: [{content: "Task 1",deadline: "2016-04-09"}]}},
 		{upsert : true},
@@ -93,4 +91,19 @@ router.post('/them', function(req, res, next){
 	});
 	res.redirect('/');
 });
+
+router.get('/del/:id', function(req, res, next) {
+	sess = req.session;
+	var task = sess.user.task;
+	task = task.splice(req.params.id, 1);
+	users.findAndModify({username : sess.user.username}, 
+		{ $set: {task : task}} ,
+		{upsert : true},
+		function (err, result) {
+    	console.log(err);
+	});
+    res.redirect('/');
+
+});
+
 module.exports = router;

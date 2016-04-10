@@ -44,28 +44,30 @@ $(document).ready(function(){
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
 	$("#task-list").empty();
 	var toDay = new Date(); toDay.setHours( 0 , 0 , 0 , 0 );
-
-	for(i = 0; i<task.length; i++) {
-		var from = task[i].deadline.split( '-' );
-		var day = new Date();
+	if(task != null){
+		for(i = 0; i<task.length; i++) {
+			var from = task[i].deadline.split( '-' );
+			var day = new Date();
+		
+			if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
+		
+			if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
+			
+			
+			var x = differ( toDay , day );
+			
+			if ( x > 3 ) x = 3; temp = (x+1) * 25;
+			var htmlData = '<li class="task-item" style="list-style-type: none;" title="Click on this to delete this task.">' + 
+				'<div class="progress" onclick="del('+i+')">' + 
+					'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%" value="' + differ( toDay, day ) + '">' +
+						task[i].content + 
+					'</div>' + 
+				'</div>' +
+			'</li>';
+			$("#task-list").append( htmlData );
+		};
+	}
 	
-		if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
-	
-		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
-		
-		
-		var x = differ( toDay , day );
-		
-		if ( x > 3 ) x = 3; temp = (x+1) * 25;
-		var htmlData = '<li class="task-item" style="list-style-type: none;">' + 
-			'<div class="progress">' + 
-				'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%" value="' + differ( toDay, day ) + '">' +
-					task[i].content + 
-				'</div>' + 
-			'</div>' +
-		'</li>';
-		$("#task-list").append( htmlData );
-	};
 
 	// đến đây là hết cái đống get json rồi
 
@@ -107,4 +109,6 @@ $(document).ready(function(){
 	function edit(){
 		window.location.href = '/edit';
 	}
-	
+	function del(id){
+		window.location.href = '/del/'+id;
+	}
