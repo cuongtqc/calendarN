@@ -47,12 +47,16 @@ $(document).ready(function(){
 
 	for(i = 0; i<task.length; i++) {
 		var from = task[i].deadline.split( '-' );
-		var day = null;
-		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );
-		if (from[2].length==2) day = new Date( from[0], from[1] - 1, from[2] );
+		var day = new Date();
+	
+		if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
+	
+		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
+		
+		
 		var x = differ( toDay , day );
-
-		if ( x > 3 ) x = 3; temp = (x) * 25;
+		
+		if ( x > 3 ) x = 3; temp = (x+1) * 25;
 		var htmlData = '<li class="task-item" style="list-style-type: none;">' + 
 			'<div class="progress">' + 
 				'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%" value="' + differ( toDay, day ) + '">' +
