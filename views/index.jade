@@ -44,6 +44,8 @@ html
 													.col-sm-6.col-sm-offset-3
 														input#login-submit.form-control.btn.btn-login(type='submit', name='login-submit', tabindex='4', value='Log In')
 														p.text-danger * If you don't have an account, please tick the box register, full fill information and Click on Login.
+														-if (sess.user.loginerror == true)
+															p.text-danger * ERROR: Invalid account.
 											// Forgot password action
 											.form-group
 												.row

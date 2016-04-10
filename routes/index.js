@@ -20,7 +20,8 @@ app.use(session({secret: 'duanaohachduocpassnayAhihi'}));
 router.get('/', function(req, res, next) {
 	sess = req.session||{};
 	sess.user = sess.user||{};
-
+	sess.user.loginerror = sess.user.loginerror||false;
+	console.log(sess.user.loginerror);
 	sess.user.act = 'view';
 	sess.user.name = sess.user.name||"Guest";	
 	res.render('index', {sess: sess});
@@ -29,12 +30,12 @@ router.get('/', function(req, res, next) {
 router.post('/login', function(req, res, next){
 	sess = req.session||{};
 	sess.user = sess.user||{};
+	sess.user.loginerror = sess.user.loginerror||false;
 	users.find( { username:req.body.username, password:req.body.password}, function(err, docs){
 		if (err) { 
-			console.log(err)
+			console.log(err);
 		}
 		else {
-			
 			if (docs) {
 				for(var i = 0; i < docs.length; i++){
 					sess.user.name = docs[i].name;
@@ -44,7 +45,8 @@ router.post('/login', function(req, res, next){
 					sess.user.password = docs[i].password;
 					sess.user.task = docs[i].task;
 				}
-			};
+			}
+			if(JSON.stringify(docs) == '[]') sess.user.loginerror = true;
 			res.redirect("/");	
 		}
 
@@ -59,22 +61,30 @@ router.get('/logout', function(req, res, next){
 
 router.post('/register', function(req, res, next){
 	sess = req.session;
-
-	users.find({ username:req.body.username}, function(err, docs){
+	sess.user = sess.user||{};
+	var flag = true;
+	var promise = users.find({ username:req.body.username}, function(err, docs){
 		if (err) { 
 			console.log(err);
 		}
 		else {
 			//Chưa có task nên là chưa lấy task về
 			sess.user.logged = false;
-			if (docs.username != req.body.username) {
-				
-				users.insert({username:req.body.username, name:req.body.name, password:req.body.password, task:[]});
-				
-			} else console.log('Account invalid');
-			res.redirect("/");	
+			for (var i = 0; i < docs.length; i++) {
+				if (docs[i].username == req.body.username) {
+					flag = false;
+					sess.user.loginerror == true;
+					console.log("Flag = " + flag);
+					break; 
+				} 
+			};
 		}
 
+	});
+	console.log("Flag = " + flag);
+	promise.success(function(doc){
+		if (flag) users.insert({username:req.body.username, name:req.body.name, password:req.body.password, task:[]});	
+		res.redirect("/");	
 	});
 		
 });

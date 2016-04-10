@@ -110,11 +110,11 @@ $(document).ready(function(){
 	var show = true;
 	$('#registerbox').click(function(e) {
 			if (show) {
-				$('#registername').show();
+				$('#registername').show(200);
 				show = false;
 				$('#login-form').attr('action', '/register');
 			} else {
-				$('#registername').hide();
+				$('#registername').hide(150);
 				show =true;
 				$('#login-form').attr('action', '/login');
 			}
