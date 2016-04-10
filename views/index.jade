@@ -31,13 +31,19 @@ html
 												input#username.form-control(type='text', name='username', tabindex='1', placeholder='Username', value='')
 											.form-group
 												input#password.form-control(type='password', name='password', tabindex='2', placeholder='Password')
+											#registername.form-group(hidden)
+												input#name.form-control(type='text', name='name', tabindex='2', placeholder='Name')
 											.form-group.text-center
 												input#remember(type='checkbox', tabindex='3', name='remember')
 												label(for='remember')  Remember Me
+											#registerbox.form-group.text-center
+												input#register(type='checkbox', tabindex='3', name='register')
+												label(for='register')  Register
 											.form-group
 												.row
 													.col-sm-6.col-sm-offset-3
 														input#login-submit.form-control.btn.btn-login(type='submit', name='login-submit', tabindex='4', value='Log In')
+														p.text-danger * If you don't have an account, please tick the box register, full fill information and Click on Login.
 											// Forgot password action
 											.form-group
 												.row
@@ -54,7 +60,6 @@ html
 							img#avatar.img
 							p#username=sess.user.name
 						#btn-add.btn.btn-lg(onclick="add()")  Add 
-						#btn-edit.btn.btn-lg(onclick="edit()")  Edit
 						#btn-sort.btn.btn-lg(onclick="sortI()")  Sort 
 						#btn-select.btn.btn-lg  Select day 
 						#btn-out.btn.btn-lg(onclick="logout()")  Log out
@@ -67,11 +72,10 @@ html
 									p.flex-item.day-text  Day 1 
 									p.flex-item.day-text  Day 2 
 									p.flex-item.day-text  Day 3 
+								.text-danger *Click on task to show more action
 								ul#task-list
-						-if(sess.user.act == 'edit' || sess.user.act == 'add')
+						-if( sess.user.act == 'add')
 							#task-edit
-								// chỉnh sửa / thêm task
-								// nếu người dùng ấn add thì cho thằng này value 'Add task', tương tự cho chỉnh sửa
 								h2#task-edit-tittle.jumbotron= sess.user.act + " task"
 									form#task-edit-form(method='post', action='/them', role='form', style='display: block;')
 										.form-group
@@ -80,6 +84,8 @@ html
 											input#task-deadline.form-control(type='date', name='task_deadline', tabindex='2', placeholder="Task's deadline")
 										.form-group
 											input#task-submit.form-control.btn.pull-right(type='submit', name='task-submit', tabindex='3', value='Submit')
+											a#task-submit.form-control.btn.pull-right(href="/", name='task-submit', tabindex='3') Cancel
+											
 						
 		script(src='javascripts/picker.js')
 		script(src='javascripts/picker.date.js')

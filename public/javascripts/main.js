@@ -1,4 +1,5 @@
 // function hệ thống
+//alert('TEST');
 $(document).ready(function(){
 	
 	$(function() {
@@ -30,8 +31,7 @@ $(document).ready(function(){
 		var difference_ms = date2_ms - date1_ms;
 		return Math.round( difference_ms / one_day ); 
 	};
-	//alert('TEST' + $("#userinfo").text());
-	// user data( template )
+	
 	// user là JSON object
 	// userinfo sẽ được thêm ngay trong jade không cần bind từ đây vì chỉ cần lấy sess.user là lấy được thông tin cá nhân rồi
 	
@@ -57,32 +57,70 @@ $(document).ready(function(){
 			var x = differ( toDay , day );
 			
 			if ( x > 3 ) x = 3; temp = (x+1) * 25;
-			var htmlData = '<li class="task-item" style="list-style-type: none;" title="Click on this to delete this task.">' + 
-				'<div class="progress" onclick="del('+i+')">' + 
+			var htmlData = '<li class="task-item" style="list-style-type: none;" title="Click on this to manage this task.">' + 
+				'<div class="progress" onclick="showtool('+i+')">' + 
 					'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%" value="' + differ( toDay, day ) + '">' +
 						task[i].content + 
 					'</div>' + 
-				'</div>' +
+				'</div>' +	
+				'<div id="'+i+'" hidden>'+
+						'<button class="btn btn-warning" id="cancelformshow'+i+'" onclick="formshow(\'formshow'+i+'\')">Edit</button>'+
+						'<button class="btn btn-danger"><a href="/del/'+i+'" >Delete</a></button>'+
+				'</div>'+
+				'<div id="formshow'+i+'" hidden>'+
+  					'<h2 id="task-edit-tittle">Edit</h2>'+
+    				'<form id="task-edit-form" method="post" action="/edit/'+i+'" role="form" style="display: block;">'+
+	      				'<div class="form-group">'+
+	        				'<input id="task-name" type="text" name="task_name" tabindex="1" placeholder="Task\'s name" class="form-control"/>'+
+	      				'</div>'+
+	      				'<div class="form-group">'+
+	        				'<input id="task-deadline" type="date" name="task_deadline" tabindex="2" placeholder="Task\'s deadline" class="form-control"/>'+
+      					'</div>'+
+      					'<div class="form-group">'+
+        					'<input type="submit" name="task-submit" tabindex="3" value="Submit" class=" btn "/>'+
+      					'</div>'+
+    				'</form>'+
+				'</div>'+
 			'</li>';
 			$("#task-list").append( htmlData );
 		};
 	}
-	
-
-	// đến đây là hết cái đống get json rồi
-
-
+});
 	$("#task-deadline").pickadate({
 		today: '',
 		clear: '',
 		close: 'Cancel',
 		min: 1
 	});
-
-	//Cuong them function
-	
-});
+	function showtool(id){
+		$('#'+id).toggle(100);
+	}
+	var formshowvar = true;
+	function formshow(id){
+		$('#'+id).toggle(100);
+		if (formshowvar) {
+			$('#cancel'+id).text('Cancel');	
+			formshowvar =false;
+		} else {
+			$('#cancel'+id).text('Edit');	
+			formshowvar =true;
+		}
 		
+	}
+	var show = true;
+	$('#registerbox').click(function(e) {
+			if (show) {
+				$('#registername').show();
+				show = false;
+				$('#login-form').attr('action', '/register');
+			} else {
+				$('#registername').hide();
+				show =true;
+				$('#login-form').attr('action', '/login');
+			}
+
+	});
+	
 	function sortI(){
 		
 			var items = $("#task-list li").get();
@@ -106,8 +144,8 @@ $(document).ready(function(){
 	function add(){
 		window.location.href = '/add';
 	}
-	function edit(){
-		window.location.href = '/edit';
+	function edit(id){
+		window.location.href = '/edit/'+id;
 	}
 	function del(id){
 		window.location.href = '/del/'+id;

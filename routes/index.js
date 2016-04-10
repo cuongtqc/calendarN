@@ -20,11 +20,7 @@ app.use(session({secret: 'duanaohachduocpassnayAhihi'}));
 router.get('/', function(req, res, next) {
 	sess = req.session||{};
 	sess.user = sess.user||{};
-	if (JSON.stringify(sess.user)!='{}' && sess.user!=null) {
-		sess.user.logged = 1;
-	} else {
-		sess.user.logged = 0;
-	};
+
 	sess.user.act = 'view';
 	sess.user.name = sess.user.name||"Guest";	
 	res.render('index', {sess: sess});
@@ -33,12 +29,12 @@ router.get('/', function(req, res, next) {
 router.post('/login', function(req, res, next){
 	sess = req.session||{};
 	sess.user = sess.user||{};
-	var promise = users.find( { username:req.body.username, password:req.body.password}, function(err, docs){
+	users.find( { username:req.body.username, password:req.body.password}, function(err, docs){
 		if (err) { 
 			console.log(err)
 		}
 		else {
-			//Chưa có task nên là chưa lấy task về
+			
 			if (docs) {
 				for(var i = 0; i < docs.length; i++){
 					sess.user.name = docs[i].name;
@@ -61,14 +57,26 @@ router.get('/logout', function(req, res, next){
 	res.redirect('/');
 });
 
-router.get('/register', function(req, res, next){
+router.post('/register', function(req, res, next){
+	sess = req.session;
 
-	users.findAndModify({username : 'quangcuong0808'}, 
-		{ $set: {task: [{content: "Task 1",deadline: "2016-04-09"}]}},
-		{upsert : true},
-		function (err, result) {
-    	console.log(err);
+	users.find({ username:req.body.username}, function(err, docs){
+		if (err) { 
+			console.log(err);
+		}
+		else {
+			//Chưa có task nên là chưa lấy task về
+			sess.user.logged = false;
+			if (docs.username != req.body.username) {
+				
+				users.insert({username:req.body.username, name:req.body.name, password:req.body.password, task:[]});
+				
+			} else console.log('Account invalid');
+			res.redirect("/");	
+		}
+
 	});
+		
 });
 
 router.get('/:act', function(req, res, next){
@@ -95,7 +103,21 @@ router.post('/them', function(req, res, next){
 router.get('/del/:id', function(req, res, next) {
 	sess = req.session;
 	var task = sess.user.task;
-	task = task.splice(req.params.id, 1);
+	task.splice(req.params.id, 1);
+	users.findAndModify({username : sess.user.username}, 
+		{ $set: {task : task}} ,
+		{upsert : true},
+		function (err, result) {
+    	console.log(err);
+	});
+    res.redirect('/');
+
+});
+
+router.post('/edit/:id', function(req, res, next) {
+	sess = req.session;
+	var task = sess.user.task;
+	task.splice(req.params.id, 1,{content:req.body.task_name, deadline: req.body.task_deadline});
 	users.findAndModify({username : sess.user.username}, 
 		{ $set: {task : task}} ,
 		{upsert : true},
