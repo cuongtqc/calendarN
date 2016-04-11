@@ -1,28 +1,5 @@
 // function hệ thống
 //alert('TEST');
-$(document).ready(function(){
-	
-	$(function() {
-
-	    $('#login-form-link').click(function(e) {
-			$("#login-form").delay(100).fadeIn(100);
-	 		$("#register-form").fadeOut(100);
-			$('#register-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-		
-		$('#register-form-link').click(function(e) {
-			$("#register-form").delay(100).fadeIn(100);
-	 		$("#login-form").fadeOut(100);
-			$('#login-form-link').removeClass('active');
-			$(this).addClass('active');
-			e.preventDefault();
-		});
-
-	});
-
-
 
 	var differ = function( date1 , date2 ) {
 		var one_day = 1000*60*60*24;
@@ -31,6 +8,17 @@ $(document).ready(function(){
 		var difference_ms = date2_ms - date1_ms;
 		return Math.round( difference_ms / one_day ); 
 	};
+	
+	$( document ).ready(function() {
+		var date = new Date();
+		var day1 = date.setDate(date.getDate() + 1).toISOString().slice(0, 10);
+		var day2 = date.setDate(date.getDate() + 2).toISOString().slice(0, 10);
+		var day3 = date.setDate(date.getDate() + 3).toISOString().slice(0, 10);
+		$(#day1).html( day1 );
+		$(#day2).html( day2 );
+		$(#day3).html( day3 );
+		console.log( day1 );
+	});
 	
 	// user là JSON object
 	// userinfo sẽ được thêm ngay trong jade không cần bind từ đây vì chỉ cần lấy sess.user là lấy được thông tin cá nhân rồi
@@ -85,7 +73,8 @@ $(document).ready(function(){
 			$("#task-list").append( htmlData );
 		};
 	}
-});
+	
+	
 	$("#task-deadline").pickadate({
 		today: '',
 		clear: '',
