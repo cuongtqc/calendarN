@@ -27,11 +27,11 @@ html
 										// Login action
 										form#login-form(action='/login', method='post', role='form', style='display: block;')
 											.form-group
-												input#username-login.form-control(type='text', name='username', tabindex='1', placeholder='Username', value='')
+												input#username-login.form-control(type='text', name='username', tabindex='1', placeholder='Username', value='' required)
 											.form-group
-												input#password-login.form-control(type='password', name='password', tabindex='2', placeholder='Password')
+												input#password-login.form-control(type='password', name='password', tabindex='2', placeholder='Password' required)
 											#registername.form-group(hidden)
-												input#name.form-control(type='text', name='name', tabindex='2', placeholder='Name')
+												input#name.form-control(type='text', name='name', tabindex='2', placeholder='Name' )
 											.form-group.text-center
 												input#remember(type='checkbox', tabindex='3', name='remember')
 												label(for='remember')  Remember Me
@@ -62,7 +62,8 @@ html
 							p#username=sess.user.name
 						#btn-add.btn.btn-lg(onclick="add()")  Add 
 						#btn-sort.btn.btn-lg(onclick="sortI()")  Sort 
-						#btn-select.btn.btn-lg  Select day 
+						input( type="date" id="selectDay" class="day-text")
+						#btn-select.btn.btn-lg Select this Day 
 						#btn-out.btn.btn-lg(onclick="logout()")  Log out
 					.col-lg-9
 						// hiện list task

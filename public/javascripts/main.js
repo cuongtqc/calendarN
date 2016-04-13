@@ -1,6 +1,5 @@
 // function hệ thống
 //alert('TEST');
-
 	var differ = function( date1 , date2 ) {
 		var one_day = 1000*60*60*24;
 		var date1_ms = date1.getTime();
@@ -8,18 +7,24 @@
 		var difference_ms = date2_ms - date1_ms;
 		return Math.round( difference_ms / one_day ); 
 	};
+
+	var getString = function( date ) {
+		var day = date.getDate();
+		var month = date.getMonth() + 1;
+		var year = date.getFullYear();
+		return day + '/' + month + '/' + year;
+
+	}
 	
 	$( document ).ready(function() {
 		var date = new Date();
-		var day1 = date.setDate(date.getDate() + 1).toISOString().slice(0, 10);
-		var day2 = date.setDate(date.getDate() + 2).toISOString().slice(0, 10);
-		var day3 = date.setDate(date.getDate() + 3).toISOString().slice(0, 10);
-		$(#day1).html( day1 );
-		$(#day2).html( day2 );
-		$(#day3).html( day3 );
-		console.log( day1 );
+		var dayPlus = 24 * 60 * 60 * 1000;
+		$("#day1").html( getString(new Date(date.getTime()+dayPlus)) );
+		$("#day2").html( getString(new Date(date.getTime()+2*dayPlus)) );
+		$("#day3").html( getString(new Date(date.getTime()+3*dayPlus)) );
+		$("#selectDay").attr( "placeholder", getString( date ) );
 	});
-	
+		
 	// user là JSON object
 	// userinfo sẽ được thêm ngay trong jade không cần bind từ đây vì chỉ cần lấy sess.user là lấy được thông tin cá nhân rồi
 	
@@ -52,17 +57,17 @@
 					'</div>' + 
 				'</div>' +	
 				'<div id="'+i+'" hidden>'+
-						'<button class="btn btn-warning" id="cancelformshow'+i+'" onclick="formshow(\'formshow'+i+'\')">Edit</button>'+
-						'<button class="btn btn-danger"><a href="/del/'+i+'" >Delete</a></button>'+
+						'<div class="btn" id="cancelformshow'+i+'" onclick="formshow(\'formshow'+i+'\')">Edit</div>'+
+						'<a class="btn "href="/del/'+i+'" >Delete</a>'+
 				'</div>'+
 				'<div id="formshow'+i+'" hidden>'+
-  					'<h2 id="task-edit-tittle">Edit</h2>'+
-    				'<form id="task-edit-form" method="post" action="/edit/'+i+'" role="form" style="display: block;">'+
+  					'<h2>Edit</h2>'+
+    				'<form class="task-edit-form" method="post" action="/edit/'+i+'" role="form" style="display: block;">'+
 	      				'<div class="form-group">'+
-	        				'<input id="task-name" type="text" name="task_name" tabindex="1" placeholder="Task\'s name" class="form-control"/>'+
+	        				'<input type="text" name="task_name" tabindex="1" placeholder="Task\'s name" class="form-control"/>'+
 	      				'</div>'+
 	      				'<div class="form-group">'+
-	        				'<input id="task-deadline" type="date" name="task_deadline" tabindex="2" placeholder="Task\'s deadline" class="form-control"/>'+
+	        				'<input type="date" name="task_deadline" tabindex="2" placeholder="Task\'s deadline" class="form-control deadline-edit"/>'+
       					'</div>'+
       					'<div class="form-group">'+
         					'<input type="submit" name="task-submit" tabindex="3" value="Submit" class=" btn "/>'+
@@ -80,6 +85,18 @@
 		clear: '',
 		close: 'Cancel',
 		min: 1
+	});
+	$(".deadline-edit").pickadate({
+		today: '',
+		clear: '',
+		close: 'Cancel',
+		min: 1
+	});
+	$("#selectDay").pickadate({
+		today: 'Today',
+		clear: '',
+		close: 'Cancel',
+		min: true
 	});
 	function showtool(id){
 		$('#'+id).toggle(100);
