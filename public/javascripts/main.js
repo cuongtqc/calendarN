@@ -63,7 +63,7 @@
 		$("#day1").html( getString(new Date(date.getTime()+dayPlus)) );
 		$("#day2").html( getString(new Date(date.getTime()+2*dayPlus)) );
 		$("#day3").html( getString(new Date(date.getTime()+3*dayPlus)) );
-		$("#selectDay").attr( "placeholder", getString( date ) );
+		$("#selectDay").attr( "value", getString( date ) );
 		var toDay = new Date(); toDay.setHours( 0 , 0 , 0 , 0 );
 		getTaskListWithDate( toDay );
 	});
