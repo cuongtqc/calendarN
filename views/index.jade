@@ -57,14 +57,14 @@ html
 			.container-fluid
 				.row
 					.col-lg-3.flex-container-col
-						#user
+						#user.flex-item
 							img#avatar.img
 							p#username=sess.user.name
-						#btn-add.btn.btn-lg(onclick="add()")  Add 
-						#btn-sort.btn.btn-lg(onclick="sortI()")  Sort 
-						input( type="date" id="selectDay" class="day-text")
-						#btn-select.btn.btn-lg Select this Day 
-						#btn-out.btn.btn-lg(onclick="logout()")  Log out
+						#btn-add.btn.btn-lg.flex-item(onclick="add()")  Add 
+						#btn-sort.btn.btn-lg.flex-item(onclick="sortI()")  Sort 
+						input( type="date" id="selectDay" class="day-text flex-item")
+						#btn-select.btn.btn-lg.flex-item Select this Day 
+						#btn-out.btn.btn-lg.flex-item(onclick="logout()")  Log out
 					.col-lg-9
 						// hiện list task
 						-if(sess.user.act == 'view')
