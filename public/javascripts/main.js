@@ -17,11 +17,12 @@
 				if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
 				if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
 				var x = differ( currentDate , day );
+				console.log( currentDate );
 				if ( x <= 0 ) continue;
 				if ( x > 3 ) x = 3; temp = (x+1) * 25;
 				var htmlData = '<li class="task-item" style="list-style-type: none;" title="Click on this to manage this task.">' + 
 					'<div class="progress" onclick="showtool('+i+')">' + 
-						'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%" value="' + differ( toDay, day ) + '">' +
+						'<div class="progress-bar progress-bar-info progress-bar-striped active" style="width:' + temp + '%" value="' + differ( currentDate, day ) + '">' +
 							task[i].content + 
 						'</div>' + 
 						'</div>' +	
@@ -78,9 +79,12 @@
 	
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
 	$("#btn-select").click( function() {
-		var day = new Date();
 		var from = $("#selectDay").val().split( '-' );
-		day = new Date( from[0], from[1] - 1, from[2] );	
+		console.log( from );
+		if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
+		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
+		//var day = new Date( from[0], from[1] - 1, from[2] );	
+		console.log( day );
 		getTaskListWithDate( day );
 	})
 	
