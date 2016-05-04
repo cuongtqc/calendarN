@@ -75,9 +75,10 @@
 
 	// task data( template )
 	// task là JSON array chứa các task và deadline
+	var userinfo = jQuery.parseJSON( $("#userinfo").text() );
 	var task = jQuery.parseJSON( $("#userinfo").text() ).task;
 	var avatarcode = jQuery.parseJSON( $("#userinfo").text() ).avatar;
-	
+	$("#userinfo").text('');
 	if(avatarcode) $('#avatar').attr('src', "data:image/png;base64, "+avatarcode);
 	
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
@@ -186,7 +187,7 @@
 	};
 
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
-	    document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
+	    if(document.getElementById('filePicker')) document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
 	} else {
 	    alert('The File APIs are not fully supported in this browser.');
 	}

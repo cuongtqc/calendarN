@@ -12,7 +12,7 @@ html
 		script(src='javascripts/bootstrap.min.js')
 	body
 		// Login container. Nếu đang có sẵn tài khoản thì cứ login, không có thì tự động tạo tài khoản cho người dùng
-		p.hidden#userinfo= JSON.stringify(sess.user)
+		p#userinfo(hidden disable style="visible:none")= JSON.stringify(sess.user)
 		-if(!sess.user.logged==1)
 			.container
 				.row
