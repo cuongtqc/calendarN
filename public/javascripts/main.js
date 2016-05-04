@@ -129,11 +129,13 @@
 			if (show) {
 				$('#registername').show(200);
 				$('#registerimage').show(200);
+				$('#login-submit').attr('value','Register');
 				show = false;
 				$('#login-form').attr('action', '/register');
 			} else {
 				$('#registername').hide(150);
 				$('#registerimage').hide(150);
+				$('#login-submit').attr('value','Login');
 				show =true;
 				$('#login-form').attr('action', '/login');
 			}
