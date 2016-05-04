@@ -43,6 +43,7 @@ router.post('/login', function(req, res, next){
 					sess.user.act = 'view';
 					sess.user.username = docs[i].username;
 					sess.user.password = docs[i].password;
+					sess.user.avatar = docs[i].avatar;
 					sess.user.task = docs[i].task;
 				}
 			}
@@ -62,6 +63,7 @@ router.get('/logout', function(req, res, next){
 router.post('/register', function(req, res, next){
 	sess = req.session;
 	sess.user = sess.user||{};
+	console.log("avarta: "+ req.body.avatarcode);
 	var flag = true;
 	var promise = users.find({ username:req.body.username}, function(err, docs){
 		if (err) { 
@@ -83,7 +85,7 @@ router.post('/register', function(req, res, next){
 	});
 	console.log("Flag = " + flag);
 	promise.success(function(doc){
-		if (flag) users.insert({username:req.body.username, name:req.body.name, password:req.body.password, task:[]});	
+		if (flag) users.insert({username:req.body.username, name:req.body.name, password:req.body.password, avatar:req.body.avatarcode, task:[]});	
 		res.redirect("/");	
 	});
 		

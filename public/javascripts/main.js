@@ -76,6 +76,9 @@
 	// task data( template )
 	// task là JSON array chứa các task và deadline
 	var task = jQuery.parseJSON( $("#userinfo").text() ).task;
+	var avatarcode = jQuery.parseJSON( $("#userinfo").text() ).avatar;
+	
+	if(avatarcode) $('#avatar').attr('src', "data:image/png;base64, "+avatarcode);
 	
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
 	$("#btn-select").click( function() {
@@ -125,18 +128,19 @@
 	$('#registerbox').click(function(e) {
 			if (show) {
 				$('#registername').show(200);
+				$('#registerimage').show(200);
 				show = false;
 				$('#login-form').attr('action', '/register');
 			} else {
 				$('#registername').hide(150);
+				$('#registerimage').hide(150);
 				show =true;
 				$('#login-form').attr('action', '/login');
 			}
 
 	});
 	
-	function sortI(){
-		
+	function sortI(){	
 			var items = $("#task-list li").get();
 			items.sort( function( a , b ) {
 				var keyA = $(a).children(".progress").children().attr( "value" );
@@ -149,7 +153,6 @@
 			$.each(items, function(i, li){
 				ul.append(li);
 			});
-		
 	}
 	function logout(){
 		window.location.href = '/logout';
@@ -163,4 +166,25 @@
 	}
 	function del(id){
 		window.location.href = '/del/'+id;
+	}
+	var handleFileSelect = function(evt) {
+	    var files = evt.target.files;
+	    var file = files[0];
+
+	    if (files && file) {
+	        var reader = new FileReader();
+
+	        reader.onload = function(readerEvt) {
+	            var binaryString = readerEvt.target.result;
+	            document.getElementById("base64textarea").value = btoa(binaryString);
+	        };
+
+	        reader.readAsBinaryString(file);
+	    }
+	};
+
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+	    document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
+	} else {
+	    alert('The File APIs are not fully supported in this browser.');
 	}

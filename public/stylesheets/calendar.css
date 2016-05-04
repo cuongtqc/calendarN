@@ -6,8 +6,8 @@ body {
 }
 
 .img {
-	width: 80%;
-	height: auto;
+	width: auto;
+	height: 120px;
 	display: block;
     margin: 0 auto;
 }

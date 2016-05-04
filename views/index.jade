@@ -32,6 +32,10 @@ html
 												input#password-login.form-control(type='password', name='password', tabindex='2', placeholder='Password' required)
 											#registername.form-group(hidden)
 												input#name.form-control(type='text', name='name', tabindex='2', placeholder='Name' )
+											#registerimage.form-group(hidden)
+												input#filePicker.form-control(type='file', name='avatar', tabindex='2')
+											#registerimagecode.form-group(hidden)
+												input#base64textarea.form-control(type='text', name='avatarcode', tabindex='2')
 											.form-group.text-center
 												input#remember(type='checkbox', tabindex='3', name='remember')
 												label(for='remember')  Remember Me
@@ -58,7 +62,7 @@ html
 				.row
 					.col-lg-3.col-md-3.col-sm-3.flex-container-col
 						#user.flex-item
-							img#avatar.img
+							img#avatar.img(alt="Avatar Image")
 							p#username=sess.user.name
 						#btn-add.btn.btn-lg.flex-item(onclick="add()")  Add 
 						#btn-sort.btn.btn-lg.flex-item(onclick="sortI()")  Sort 
