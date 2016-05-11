@@ -74,10 +74,10 @@ html
 						-if(sess.user.act == 'view')
 							#task-view
 								.flex-container-row
-									p.flex-item.day-text  Today 
-									p.flex-item.day-text#day1  Day 1 
-									p.flex-item.day-text#day2  Day 2 
-									p.flex-item.day-text#day3  Day 3 
+									p.flex-item.flex-item-equal.day-text#today  Today 
+									p.flex-item.flex-item-equal.day-text#day1  Day 1 
+									p.flex-item.flex-item-equal.day-text#day2  Day 2 
+									p.flex-item.flex-item-equal.day-text#day3  Day 3 
 								ul#task-list
 						-if( sess.user.act == 'add')
 							#task-edit

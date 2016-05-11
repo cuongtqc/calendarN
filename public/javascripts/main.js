@@ -56,13 +56,24 @@
 		var year = date.getFullYear();
 		return day + '/' + month + '/' + year;
 	};
+
+	var setDayText = function( date ) {
+		var dayPlus = 24 * 60 * 60 * 1000;	
+		if ( differ( date, new Date() ) == 0 ) {
+			$("#today").html( "Today" );
+		}
+		else {
+			$("#today").html( getString(new Date(date)) );
+		}
+		$("#day1").html( getString(new Date(date.getTime()+dayPlus)) );
+		$("#day2").html( getString(new Date(date.getTime()+2*dayPlus)) );
+		$("#day3").html( getString(new Date(date.getTime()+3*dayPlus)) );
+	}
 	
 	$( document ).ready(function() {
 		var date = new Date();
 		var dayPlus = 24 * 60 * 60 * 1000;
-		$("#day1").html( getString(new Date(date.getTime()+dayPlus)) );
-		$("#day2").html( getString(new Date(date.getTime()+2*dayPlus)) );
-		$("#day3").html( getString(new Date(date.getTime()+3*dayPlus)) );
+		setDayText( date );
 		$("#selectDay").attr( "value", getString( date ) );
 		var toDay = new Date(); toDay.setHours( 0 , 0 , 0 , 0 );
 		getTaskListWithDate( toDay );
@@ -87,9 +98,10 @@
 		console.log( from );
 		if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
 		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
-		//var day = new Date( from[0], from[1] - 1, from[2] );	
+		// var day = new Date( from[0], from[1] - 1, from[2] );	
 		console.log( day );
 		getTaskListWithDate( day );
+		setDayText( day );
 	})
 	
 	$("#task-deadline").pickadate({
@@ -173,7 +185,7 @@
 	var handleFileSelect = function(evt) {
 	    var files = evt.target.files;
 	    var file = files[0];
-
+	    
 	    if (files && file) {
 	        var reader = new FileReader();
 
