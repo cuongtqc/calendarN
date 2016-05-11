@@ -31,11 +31,11 @@ html
 											.form-group
 												input#password-login.form-control(type='password', name='password', tabindex='2', placeholder='Password' required)
 											#registername.form-group(hidden)
-												input#name.form-control(type='text', name='name', tabindex='2', placeholder='Name' )
+												input#name.form-control(type='text', name='name', tabindex='3', placeholder='Name' )
 											#registerimage.form-group(hidden)
-												input#filePicker.form-control(type='file', name='avatar', tabindex='2')
+												input#filePicker.form-control(type='file', name='avatar', tabindex='4')
 											#registerimagecode.form-group(hidden)
-												input#base64textarea.form-control(type='text', name='avatarcode', tabindex='2')
+												input#base64textarea.form-control(type='text', name='avatarcode', tabindex='5')
 											.form-group.text-center
 												input#remember(type='checkbox', tabindex='3', name='remember')
 												label(for='remember')  Remember Me
@@ -66,7 +66,7 @@ html
 							p#username=sess.user.name
 						#btn-add.btn.btn-lg.flex-item(onclick="add()")  Add 
 						#btn-sort.btn.btn-lg.flex-item(onclick="sortI()")  Sort 
-						input( type="date" id="selectDay" class="day-text flex-item")
+						input( type="date" id="selectDay" class="day-text flex-item" placeholder="Today")
 						#btn-select.btn.btn-lg.flex-item Select this Day 
 						#btn-out.btn.btn-lg.flex-item(onclick="logout()")  Log out
 					.col-lg-9.col-md-9.col-sm-9
