@@ -137,22 +137,28 @@
 		}
 		
 	}
-	var show = true;
-	$('#registerbox').click(function(e) {
-			if (show) {
-				$('#registername').show(200);
-				$('#registerimage').show(200);
-				$('#login-submit').attr('value','Register');
-				show = false;
-				$('#login-form').attr('action', '/register');
-			} else {
-				$('#registername').hide(150);
-				$('#registerimage').hide(150);
-				$('#login-submit').attr('value','Login');
-				show =true;
-				$('#login-form').attr('action', '/login');
-			}
 
+	var check = true;
+	$('#register').click(function() {
+
+	    $('#register').attr("checked", check);
+		
+
+	    if ($('#register').attr('checked')) {
+	        $('#registername').show(200);
+			$('#registerimage').show(200);
+			$('#login-submit').attr('value','Register');
+			$('#login-form').attr('action', '/register');
+			check = false;
+
+	    } else {
+			$('#registername').hide(150);
+			$('#registerimage').hide(150);
+			$('#login-submit').attr('value','Log In');
+			$('#login-form').attr('action', '/login');
+	        check = true;
+	    }
+	    
 	});
 	
 	function sortI(){	

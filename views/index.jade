@@ -32,8 +32,8 @@ html
 												input#password-login.form-control(type='password', name='password', tabindex='2', placeholder='Password' required)
 											#registername.form-group(hidden)
 												input#name.form-control(type='text', name='name', tabindex='3', placeholder='Name' )
-											#registerimage.form-group(hidden)
-												input#filePicker.form-control(type='file', name='avatar', tabindex='4')
+											#registerimage.file-upload(hidden)
+												input#filePicker.form-control(type='file', name='avatar', tabindex='4', style = "border: none;", placeholder= "Browser")
 											#registerimagecode.form-group(hidden)
 												input#base64textarea.form-control(type='text', name='avatarcode', tabindex='5')
 											.form-group.text-center
@@ -49,13 +49,7 @@ html
 														p.text-danger * If you don't have an account, please tick the box register, full fill information and Click on Login.
 														-if (sess.user.loginerror == true)
 															p.text-danger * ERROR: Invalid account.
-											// Forgot password action
-											.form-group
-												.row
-													.col-lg-12
-														.text-center
-															// Href ....
-															a.forgot-password(href='#', tabindex='5') Forgot Password?
+											
 			//After login
 		-if(sess.user.logged==1)
 			.container-fluid
