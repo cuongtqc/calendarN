@@ -98,7 +98,6 @@
 		console.log( from );
 		if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
 		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
-		// var day = new Date( from[0], from[1] - 1, from[2] );	
 		console.log( day );
 		getTaskListWithDate( day );
 		setDayText( day );
@@ -166,6 +165,7 @@
 			items.sort( function( a , b ) {
 				var keyA = $(a).children(".progress").children().attr( "value" );
 				var keyB = $(b).children(".progress").children().attr( "value" );
+				console.log( keyA + " " + keyB );
 				if ( keyA < keyB ) return -1;
 				if ( keyA > keyB ) return 1;
 				return 0;
