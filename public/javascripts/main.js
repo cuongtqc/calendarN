@@ -167,7 +167,6 @@
 			var ul = $('#task-list');
 			$.each(items, function(i, li){
 				var key = $(li).children(".progress").children().attr( "value" );
-				console.log( key );
 				ul.append(li);
 			});
 	}
