@@ -17,7 +17,6 @@
 				if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
 				if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
 				var x = differ( currentDate , day );
-				console.log( currentDate );
 				if ( x <= 0 ) continue;
 				if ( x > 3 ) x = 3; temp = (x+1) * 25;
 				var htmlData = '<li class="task-item" style="list-style-type: none;" title="Click on this to manage this task.">' + 
@@ -95,10 +94,8 @@
 	// select day function sẽ được thêm sau, bây giờ cứ làm màu đã :v
 	$("#btn-select").click( function() {
 		var from = $("#selectDay").val().split( '-' );
-		console.log( from );
 		if (from[0].length==4) day = new Date( from[0], from[1] - 1, from[2] );	
 		if (from[2].length==4) day = new Date( from[2], from[1] - 1, from[0] );	
-		console.log( day );
 		getTaskListWithDate( day );
 		setDayText( day );
 	})
@@ -171,6 +168,7 @@
 				return 0;
 			});
 			var ul = $('#task-list');
+			console.log( items );
 			$.each(items, function(i, li){
 				ul.append(li);
 			});
