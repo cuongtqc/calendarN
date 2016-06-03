@@ -162,14 +162,12 @@
 			items.sort( function( a , b ) {
 				var keyA = $(a).children(".progress").children().attr( "value" );
 				var keyB = $(b).children(".progress").children().attr( "value" );
-				console.log( keyA + " " + keyB );
-				if ( keyA < keyB ) return -1;
-				if ( keyA > keyB ) return 1;
-				return 0;
+				return ( keyA - keyB );
 			});
 			var ul = $('#task-list');
-			console.log( items );
 			$.each(items, function(i, li){
+				var key = $(li).children(".progress").children().attr( "value" );
+				console.log( key );
 				ul.append(li);
 			});
 	}
